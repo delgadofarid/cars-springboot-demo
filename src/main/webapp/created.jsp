@@ -14,18 +14,7 @@
 <title>Welcome Page</title>
 </head>
 <body>
-	
-	<sec:authorize access="isAuthenticated()">
-		<form id="logoutForm" method="POST" action="${contextPath}/logout">
-            <sec:csrfInput />
-        </form>
-
-        <h2>Welcome <sec:authentication property="name"/> | <a href="#logout" onclick="document.forms['logoutForm'].submit()">Logout</a></h2>
-        <sec:authorize access="hasAuthority('ADMIN')">
-		    <br>
-        	<a href="${contextPath}/admin">Admin</a>
-		</sec:authorize>
-	</sec:authorize>
-    
+	<h1>User Created!</h1>
+	<a href="${contextPath}/login">Go to Login</a>
 </body>
 </html>
