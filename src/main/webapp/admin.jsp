@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Welcome Page</title>
+<title>Admin Page</title>
 </head>
 <body>
 
@@ -16,7 +16,7 @@
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
 
-        <h2>Welcome ${pageContext.request.userPrincipal.name} | <a href="#logout" onclick="document.forms['logoutForm'].submit()">Logout</a></h2>
+        <h2>Welcome to admin page ${pageContext.request.userPrincipal.name} | <a href="#logout" onclick="document.forms['logoutForm'].submit()">Logout</a></h2>
 
     </c:if>
     

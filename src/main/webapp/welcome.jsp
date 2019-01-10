@@ -18,6 +18,7 @@
 	<sec:authorize access="isAuthenticated()">
 		<form id="logoutForm" method="POST" action="${contextPath}/logout">
             <sec:csrfInput />
+            <button type="submit">Log Out</button>
         </form>
 
         <h2>Welcome <sec:authentication property="name"/> | <a href="#logout" onclick="document.forms['logoutForm'].submit()">Logout</a></h2>

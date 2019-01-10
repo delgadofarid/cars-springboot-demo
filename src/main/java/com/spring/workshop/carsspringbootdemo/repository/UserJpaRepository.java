@@ -8,4 +8,6 @@ import com.spring.workshop.carsspringbootdemo.model.User;
 @Repository
 public interface UserJpaRepository extends JpaRepository<User, Long> {
 
+	User findByUsername(String username);
+	
 }

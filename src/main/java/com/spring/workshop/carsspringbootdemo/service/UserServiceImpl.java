@@ -19,11 +19,11 @@ public class UserServiceImpl implements UserService {
 	@Autowired
     private RoleJpaRepository roleRepository;
 	@Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private BCryptPasswordEncoder passwordEncoder;
 	
 	@Override
 	public void save(User user) {
-		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		user.setRoles(new ArrayList<Role>(roleRepository.findAll()));
 		userRepository.save(user);
 	}

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.spring.workshop.carsspringbootdemo.model.User;
+import com.spring.workshop.carsspringbootdemo.service.SecurityService;
 import com.spring.workshop.carsspringbootdemo.service.UserService;
 import com.spring.workshop.carsspringbootdemo.validator.UserValidator;
 
@@ -20,6 +21,9 @@ public class MainController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private SecurityService securityService;
 	
 	@GetMapping({"/", "/welcome"})
 	public String showWelcomePage() {
@@ -35,11 +39,15 @@ public class MainController {
 	@PostMapping("/registration")
 	public String createUserAccount(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, ModelMap model) {
 		userValidator.validate(userForm, bindingResult);
-		if(!bindingResult.hasErrors()) {
-			userService.save(userForm);
-			return "redirect:/created";
+		if(bindingResult.hasErrors()) {
+			return "registration";
 		}
-		return "/registration";
+		
+		userService.save(userForm);
+		
+		securityService.autologin(userForm.getUsername(), userForm.getPasswordConfirm());
+		
+		return "redirect:/welcome";
 	}
 	
 	@GetMapping("/admin")
@@ -47,9 +55,20 @@ public class MainController {
 		return "admin";
 	}
 	
-	@GetMapping("/created")
-	public String showCreatedPage() {
-		return "created";
+	@GetMapping("/login")
+    public String login(ModelMap model, String error, String logout) {
+        if (error != null)
+            model.put("error", "Your username and password is invalid.");
+
+        if (logout != null)
+            model.put("message", "You have been logged out successfully.");
+
+        return "login";
+    }
+	
+	@GetMapping("/logout")
+	public String logout() {
+		return "redirect:/login?logout";
 	}
 
 }
